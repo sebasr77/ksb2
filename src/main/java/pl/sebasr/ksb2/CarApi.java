@@ -1,6 +1,7 @@
 package pl.sebasr.ksb2;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,7 +25,9 @@ public class CarApi {
         carList.add(new Car(4L, "BMW", "M5", "black"));
     }
 
-    @GetMapping
+    @GetMapping(produces = {
+            MediaType.APPLICATION_JSON_VALUE,
+            MediaType.APPLICATION_XML_VALUE})
     public ResponseEntity<List<Car>> getCars() {
         return new ResponseEntity<>(carList, HttpStatus.MULTI_STATUS);
     }
