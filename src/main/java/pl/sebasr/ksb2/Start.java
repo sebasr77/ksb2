@@ -16,8 +16,11 @@ public class Start {
 //        videoDao.saveVideo(2L,"Friends", "http://friends.com");
 //        videoDao.saveVideo(3L,"Dexter", "http://dexter.com");
 
-        videoDao.findAll().forEach(System.out::println);
+//        videoDao.updateVideo(new Video(3L, "Dexter 2", "https:/dexter2.com"));
+//        videoDao.deleteVideo(2L);
+//        videoDao.findAll().forEach(System.out::println);
 
+        System.out.println(videoDao.getOne(3L));
     }
 
 

@@ -2,8 +2,11 @@ package pl.sebasr.ksb2;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -43,12 +46,20 @@ public class VideoDaoImpl implements VideoDao{
     }
 
     @Override
-    public void updateVideo(Video video) {
-
+    public void updateVideo(Video newVideo) {
+        String sql = "update videos set videos.title=?, videos.url=? where videos.video_id=?";
+        jdbcTemplate.update(sql, newVideo.getTitle(), newVideo.getUrl(), newVideo.getVideoId());
     }
 
     @Override
     public void deleteVideo(long id) {
+        String sql = "delete from videos where videos.video_id = ?";
+        jdbcTemplate.update(sql, id);
+    }
 
+    @Override
+    public Video getOne(long id) {
+        String sql = "select * from videos where videos.video_id = ?";
+        return jdbcTemplate.queryForObject(sql, (rs, i) -> new Video(rs.getLong("video_id"),rs.getString("title"),rs.getString("url")), id);
     }
 }

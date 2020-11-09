@@ -6,6 +6,7 @@ public interface VideoDao {
 
     public void saveVideo(long id, String title, String url);
     public List<Video> findAll();
-    public void updateVideo(Video video);
+    public void updateVideo(Video newVideo);
     public void deleteVideo(long id);
+    public Video getOne(long id);
 }
