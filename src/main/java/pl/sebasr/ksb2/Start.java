@@ -1,28 +1,37 @@
 package pl.sebasr.ksb2;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
 @Component
 public class Start {
+    private CarRepo carRepo;
 
-    public Start(VideoDao videoDao) {
-        this.videoDao = videoDao;
+    @Autowired
+    public Start(CarRepo carRepo) {
+        this.carRepo = carRepo;
     }
 
     @EventListener(ApplicationReadyEvent.class)
-    public void init(){
-//        videoDao.saveVideo(2L,"Friends", "http://friends.com");
-//        videoDao.saveVideo(3L,"Dexter", "http://dexter.com");
+    public void init() {
+        Car carPolonez = new Car("Polonez", "Caro", Color.BLACK);
+        Car carFiat = new Car("Fiat", "Panda", Color.RED);
+        Car carFiat126 = new Car("Fiat", "126p", Color.RED);
+        Car carBmw = new Car("BMW", "A1", Color.RED);
 
-//        videoDao.updateVideo(new Video(3L, "Dexter 2", "https:/dexter2.com"));
-//        videoDao.deleteVideo(2L);
-//        videoDao.findAll().forEach(System.out::println);
+        carRepo.save(carPolonez);
+        carRepo.save(carBmw);
+        carRepo.save(carFiat);
+        carRepo.save(carFiat126);
 
-        System.out.println(videoDao.getOne(3L));
+//        List<Car> carsByColor = carRepo.findCarsByColor(Color.BLACK);
+//        carsByColor.forEach(System.out::println);
+
+
+        carRepo.findCarsByModelMyImpl("Caro").forEach(System.out::println);
+
+
     }
-
-
-    private VideoDao videoDao;
 }
